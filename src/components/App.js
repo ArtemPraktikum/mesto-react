@@ -1,28 +1,13 @@
-import Header from './Header.js';
+import Header from './Header.js'
+import Main from './Main.js'
+import Footer from './Footer.js'
+
 function App() {
   return (
     <div className='page'>
       <Header />
-      <main className='content'>
-        <section className='profile'>
-          <div className='profile__avatar-section'>
-            <img src='#' alt='Аватар профиля' className='profile__avatar' />
-            <button type='button' className='profile__avatar-button' />
-          </div>
-          <div className='profile__info'>
-            <div className='profile__heading'>
-              <h1 className='profile__title' />
-              <button type='button' className='profile__edit-button' />
-            </div>
-            <p className='profile__subtitle' />
-          </div>
-          <button type='button' className='profile__add-button' />
-        </section>
-        <section className='elements' />
-      </main>
-      <footer className='footer'>
-        <p className='footer__copyright'>© 2020 Mesto Russia</p>
-      </footer>
+      <Main />
+      <Footer />
       <section className='popup avatar-popup'>
         <form name='formAvatar' className='popup__container' noValidate>
           <h2 className='popup__title'>Обновить аватар</h2>
