@@ -1,6 +1,7 @@
 import Header from './Header.js'
 import Main from './Main.js'
 import Footer from './Footer.js'
+import PopupWithForm from './PopupWithForm.js'
 
 function App() {
   return (
@@ -8,7 +9,10 @@ function App() {
       <Header />
       <Main />
       <Footer />
-      <section className='popup avatar-popup'>
+      <PopupWithForm>
+        
+      </PopupWithForm>
+      {/* <section className='popup avatar-popup'>
         <form name='formAvatar' className='popup__container' noValidate>
           <h2 className='popup__title'>Обновить аватар</h2>
           <fieldset className='popup__input'>
@@ -122,7 +126,7 @@ function App() {
           <img src='#' alt='#' className='fullscreen__image' />
           <figcaption className='fullscreen__text' />
         </figure>
-      </section>
+      </section> */}
       {/* <template class='template'>
         <article class='element'>
           <button type='button' class='element__trash-button'></button>

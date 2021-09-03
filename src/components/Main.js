@@ -1,12 +1,12 @@
 function Main() {
   const handleEditAvatarClick = () => {
-    document.querySelector('.avatar-popup').classList.add('popup_opened')
+    document.querySelector('.avatar-popup').classList.add('popup_is-opened')
   }
   const handleEditProfileClick = () => {
-    document.querySelector('.profile-popup').classList.add('popup_opened')
+    document.querySelector('.profile-popup').classList.add('popup_is-opened')
   }
   const handleAddPlaceClick = () => {
-    document.querySelector('.add-popup').classList.add('popup_opened')
+    document.querySelector('.add-popup').classList.add('popup_is-opened')
   }
 
   return (
