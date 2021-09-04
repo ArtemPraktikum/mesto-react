@@ -2,15 +2,150 @@ import Header from './Header.js'
 import Main from './Main.js'
 import Footer from './Footer.js'
 import PopupWithForm from './PopupWithForm.js'
-
+import { useState } from 'react'
 function App() {
+  // переменные состояния, отвечающие за видимость трёх попапов
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  // функции отвечающие за изменение стейта
+  const handleEditProfileClick = () => {
+    setIsEditProfilePopupOpen(true)
+  }
+  const handleAddPlaceClick = () => {
+    setIsAddPlacePopupOpen(true)
+  }
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(true)
+  }
+
+  const closeAllPopups = () => {
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setIsEditAvatarPopupOpen(false)
+  }
+
   return (
     <div className='page'>
       <Header />
-      <Main />
+      <Main
+        // props
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+      />
       <Footer />
-      <PopupWithForm>
-        
+
+      <PopupWithForm
+        // попап измен. профиля
+
+        // props
+        popupClass='profile-popup'
+        formName='formProfile'
+        title='Редактировать профиль'
+        submitButtonText='Сохранить'
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
+        {/* children */}
+        <fieldset className='popup__input'>
+          <label className='popup__field'>
+            <input
+              type='text'
+              className='popup__item'
+              id='name'
+              name='nameInFormProfile'
+              defaultValue={''}
+              placeholder='Имя'
+              required
+              minLength={2}
+              maxLength={40}
+            />
+            <span className='popup__item-error name-error' />
+          </label>
+          <label className='popup__field'>
+            <input
+              type='text'
+              className='popup__item'
+              id='aboutMe'
+              name='aboutMeInFormProfile'
+              defaultValue={''}
+              placeholder='Обо мне'
+              required
+              minLength={2}
+              maxLength={200}
+            />
+            <span className='popup__item-error aboutMe-error' />
+          </label>
+        </fieldset>
+      </PopupWithForm>
+      <PopupWithForm
+        // попап доб. карточки
+
+        // props
+        popupClass='add-popup'
+        formName='formAddCard'
+        title='Новое место'
+        submitButtonText='Создать'
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
+        {/* children */}
+        <fieldset className='popup__input'>
+          <label className='popup__field'>
+            <input
+              type='text'
+              className='popup__item'
+              id='placeName'
+              name='nameInFormAddCard'
+              defaultValue={''}
+              placeholder='Название'
+              required
+              minLength={2}
+              maxLength={30}
+            />
+            <span className='popup__item-error placeName-error' />
+          </label>
+          <label className='popup__field'>
+            <input
+              type='url'
+              className='popup__item'
+              id='link'
+              name='aboutMeInFormAddCard'
+              defaultValue={''}
+              placeholder='Ссылка на картинку'
+              required
+            />
+            <span className='popup__item-error link-error' />
+          </label>
+        </fieldset>
+      </PopupWithForm>
+      <PopupWithForm
+        // попап измен. аватара
+
+        // props
+        popupClass='avatar-popup'
+        formName='formAvatar'
+        title='Обновить аватар'
+        submitButtonText='Сохранить'
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      >
+        {/* children */}
+        <fieldset className='popup__input'>
+          <label className='popup__field'>
+            <input
+              type='url'
+              className='popup__item'
+              id='linkAvatar'
+              name='avatarInformAvatar'
+              defaultValue={''}
+              placeholder='Ссылка на аватар'
+              required
+            />
+            <span className='popup__item-error linkAvatar-error' />
+          </label>
+        </fieldset>
       </PopupWithForm>
       {/* <section className='popup avatar-popup'>
         <form name='formAvatar' className='popup__container' noValidate>
@@ -44,82 +179,8 @@ function App() {
           </button>
         </div>
       </section>
-      <section className='popup profile-popup'>
-        <form name='formProfile' className='popup__container' noValidate>
-          <h2 className='popup__title'>Редактировать профиль</h2>
-          <fieldset className='popup__input'>
-            <label className='popup__field'>
-              <input
-                type='text'
-                className='popup__item'
-                id='name'
-                name='nameInFormProfile'
-                defaultValue={''}
-                placeholder='Имя'
-                required
-                minLength={2}
-                maxLength={40}
-              />
-              <span className='popup__item-error name-error' />
-            </label>
-            <label className='popup__field'>
-              <input
-                type='text'
-                className='popup__item'
-                id='aboutMe'
-                name='aboutMeInFormProfile'
-                defaultValue={''}
-                placeholder='Обо мне'
-                required
-                minLength={2}
-                maxLength={200}
-              />
-              <span className='popup__item-error aboutMe-error' />
-            </label>
-          </fieldset>
-          <button type='submit' className='popup__sumbit-button'>
-            Сохранить
-          </button>
-          <button type='button' className='popup__close-button' />
-        </form>
-      </section>
-      <section className='popup add-popup'>
-        <form name='formAddCard' className='popup__container' noValidate>
-          <h2 className='popup__title'>Новое место</h2>
-          <fieldset className='popup__input'>
-            <label className='popup__field'>
-              <input
-                type='text'
-                className='popup__item'
-                id='placeName'
-                name='nameInFormAddCard'
-                defaultValue={''}
-                placeholder='Название'
-                required
-                minLength={2}
-                maxLength={30}
-              />
-              <span className='popup__item-error placeName-error' />
-            </label>
-            <label className='popup__field'>
-              <input
-                type='url'
-                className='popup__item'
-                id='link'
-                name='aboutMeInFormAddCard'
-                defaultValue={''}
-                placeholder='Ссылка на картинку'
-                required
-              />
-              <span className='popup__item-error link-error' />
-            </label>
-          </fieldset>
-          <button type='submit' className='popup__sumbit-button'>
-            Создать
-          </button>
-          <button type='button' className='popup__close-button' />
-        </form>
-      </section>
+
+      
       <section className='popup popup_fullscreen'>
         <figure className='fullscreen'>
           <button type='button' className='popup__close-button' />

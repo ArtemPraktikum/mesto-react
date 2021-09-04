@@ -1,13 +1,5 @@
-function Main() {
-  const handleEditAvatarClick = () => {
-    document.querySelector('.avatar-popup').classList.add('popup_is-opened')
-  }
-  const handleEditProfileClick = () => {
-    document.querySelector('.profile-popup').classList.add('popup_is-opened')
-  }
-  const handleAddPlaceClick = () => {
-    document.querySelector('.add-popup').classList.add('popup_is-opened')
-  }
+function Main(props) {
+
 
   return (
     <main className='content'>
@@ -17,7 +9,7 @@ function Main() {
           <button
             type='button'
             className='profile__avatar-button'
-            onClick={handleEditAvatarClick}
+            onClick={props.onEditAvatar}
           />
         </div>
         <div className='profile__info'>
@@ -26,12 +18,12 @@ function Main() {
             <button
               type='button'
               className='profile__edit-button'
-              onClick={handleEditProfileClick}
+              onClick={props.onEditProfile}
             />
           </div>
           <p className='profile__subtitle' />
         </div>
-        <button type='button' className='profile__add-button' onClick={handleAddPlaceClick} />
+        <button type='button' className='profile__add-button' onClick={props.onAddPlace} />
       </section>
       <section className='elements' />
     </main>
