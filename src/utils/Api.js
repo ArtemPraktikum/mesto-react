@@ -1,10 +1,3 @@
-export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-26',
-  headers: {
-    authorization: '91449a4f-6ddf-4765-abab-e8f1174fa9e0',
-    'Content-Type': 'application/json',
-  },
-})
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -26,28 +19,28 @@ class Api {
       }),
     }).then(this._checkResponse)
   }
-
+  
   UnlikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     }).then(this._checkResponse)
   }
-
+  
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers,
     }).then(this._checkResponse)
   }
-
+  
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     }).then(this._checkResponse)
   }
-
+  
   postCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -58,7 +51,7 @@ class Api {
       }),
     }).then(this._checkResponse)
   }
-
+  
   updateUserInfo(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -80,3 +73,11 @@ class Api {
     }).then(this._checkResponse)
   }
 }
+
+export const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-26',
+  headers: {
+    authorization: '91449a4f-6ddf-4765-abab-e8f1174fa9e0',
+    'Content-Type': 'application/json',
+  },
+})
