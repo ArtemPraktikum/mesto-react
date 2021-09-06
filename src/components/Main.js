@@ -42,18 +42,17 @@ function Main(props) {
       </section>
       <section className='elements'>
         {cards.map((card) => {
-          return <Card link={card.link} name={card.name} likeNumber={card.likes.length} />
+          return (
+            <Card
+              link={card.link}
+              name={card.name}
+              likeNumber={card.likes.length}
+              onCardClick={props.onCardClick}
+            />
+          )
         })}
       </section>
     </main>
   )
 }
 export default Main
-
-// <Card
-// // каждая карточка
-
-// //props
-// >
-
-// </Card>

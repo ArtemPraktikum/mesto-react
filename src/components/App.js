@@ -3,11 +3,14 @@ import Main from './Main.js'
 import Footer from './Footer.js'
 import PopupWithForm from './PopupWithForm.js'
 import { useState } from 'react'
+import ImagePopup from './ImagePopup.js'
 function App() {
-  // переменные состояния, отвечающие за видимость трёх попапов
+  // переменные состояния, отвечающие за видимость
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState(false)
+
   // функции отвечающие за изменение стейта
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true)
@@ -18,11 +21,18 @@ function App() {
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true)
   }
+  const handleCardClick = (name, link) => {
+    setSelectedCard({
+      name: name,
+      link: link,
+    })
+  }
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+    setSelectedCard(false)
   }
 
   return (
@@ -32,6 +42,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
 
@@ -135,23 +146,7 @@ function App() {
           </label>
         </fieldset>
       </PopupWithForm>
-      {/*
-      <section className='popup popup-delete'>
-        <div className='popup__container'>
-          <h2 className='popup__title'>Вы уверены?</h2>
-          <button type='button' className='popup__close-button' />
-          <button type='button' className='popup__sumbit-button'>
-            Да
-          </button>
-        </div>
-      </section>
-      <section className='popup popup_fullscreen'>
-        <figure className='fullscreen'>
-          <button type='button' className='popup__close-button' />
-          <img src='#' alt='#' className='fullscreen__image' />
-          <figcaption className='fullscreen__text' />
-        </figure>
-      </section> */}
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   )
 }
