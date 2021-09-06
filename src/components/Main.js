@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { api } from '../utils/Api.js'
+import Card from './Card.js'
 function Main(props) {
   // переменные состояния, отвечающие за данные пользователя
   const [userName, setUserName] = useState('')
   const [userDescription, setUserDescription] = useState('')
   const [userAvatar, setUserAvatar] = useState('')
+  // переменные состояния, отвечающие за карточки
+  const [cards, setСards] = useState([])
 
   useEffect(() => {
     // Данные необходимые при загрузке страницы
@@ -13,6 +16,8 @@ function Main(props) {
         setUserName(userArray.name)
         setUserDescription(userArray.about)
         setUserAvatar(userArray.avatar)
+
+        setСards(cardsArray)
       })
       .catch((error) => {
         console.log(error)
@@ -35,8 +40,20 @@ function Main(props) {
         </div>
         <button type='button' className='profile__add-button' onClick={props.onAddPlace} />
       </section>
-      <section className='elements' />
+      <section className='elements'>
+        {cards.map((card) => {
+          return <Card link={card.link} name={card.name} likeNumber={card.likes.length} />
+        })}
+      </section>
     </main>
   )
 }
 export default Main
+
+// <Card
+// // каждая карточка
+
+// //props
+// >
+
+// </Card>

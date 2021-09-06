@@ -29,7 +29,6 @@ function App() {
     <div className='page'>
       <Header />
       <Main
-        // props
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
@@ -37,9 +36,6 @@ function App() {
       <Footer />
 
       <PopupWithForm
-        // попап измен. профиля
-
-        // props
         popupClass='profile-popup'
         formName='formProfile'
         title='Редактировать профиль'
@@ -47,7 +43,6 @@ function App() {
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
-        {/* children */}
         <fieldset className='popup__input'>
           <label className='popup__field'>
             <input
@@ -80,9 +75,6 @@ function App() {
         </fieldset>
       </PopupWithForm>
       <PopupWithForm
-        // попап доб. карточки
-
-        // props
         popupClass='add-popup'
         formName='formAddCard'
         title='Новое место'
@@ -121,9 +113,6 @@ function App() {
         </fieldset>
       </PopupWithForm>
       <PopupWithForm
-        // попап измен. аватара
-
-        // props
         popupClass='avatar-popup'
         formName='formAvatar'
         title='Обновить аватар'
@@ -131,7 +120,6 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-        {/* children */}
         <fieldset className='popup__input'>
           <label className='popup__field'>
             <input
@@ -147,29 +135,7 @@ function App() {
           </label>
         </fieldset>
       </PopupWithForm>
-      {/* <section className='popup avatar-popup'>
-        <form name='formAvatar' className='popup__container' noValidate>
-          <h2 className='popup__title'>Обновить аватар</h2>
-          <fieldset className='popup__input'>
-            <label className='popup__field'>
-              <input
-                type='url'
-                className='popup__item'
-                id='linkAvatar'
-                name='avatarInformAvatar'
-                defaultValue={''}
-                placeholder='Ссылка на аватар'
-                required
-              />
-              <span className='popup__item-error linkAvatar-error' />
-            </label>
-          </fieldset>
-          <button type='submit' className='popup__sumbit-button'>
-            Сохранить
-          </button>
-          <button type='button' className='popup__close-button' />
-        </form>
-      </section>
+      {/*
       <section className='popup popup-delete'>
         <div className='popup__container'>
           <h2 className='popup__title'>Вы уверены?</h2>
@@ -179,8 +145,6 @@ function App() {
           </button>
         </div>
       </section>
-
-      
       <section className='popup popup_fullscreen'>
         <figure className='fullscreen'>
           <button type='button' className='popup__close-button' />
@@ -188,19 +152,6 @@ function App() {
           <figcaption className='fullscreen__text' />
         </figure>
       </section> */}
-      {/* <template class='template'>
-        <article class='element'>
-          <button type='button' class='element__trash-button'></button>
-          <img src='#' alt='#' class='element__image' />
-          <div class='element__discription'>
-            <h2 class='element__title'></h2>
-            <div class='element__like-section'>
-              <button type='button' class='element__like-button'></button>
-              <span class='element__like-counter'></span>
-            </div>
-          </div>
-        </article>
-      </template> */}
     </div>
   )
 }
