@@ -8,10 +8,9 @@ function Main(props) {
   const [cards, setСards] = useState([])
 
   useEffect(() => {
-    // Данные необходимые при загрузке страницы
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userArray, cardsArray]) => {
-
+    // Данные юзера необходимые при загрузке страницы
+    api.getInitialCards()
+      .then((cardsArray) => {
         setСards(cardsArray)
       })
       .catch((error) => {
@@ -42,6 +41,8 @@ function Main(props) {
               name={card.name}
               likeNumber={card.likes.length}
               onCardClick={props.onCardClick}
+              id={card.owner._id}
+              likesArray={card.likes}
             />
           )
         })}

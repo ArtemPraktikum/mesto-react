@@ -17,12 +17,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState('')
 
   useEffect(() => {
-    // Данные необходимые при загрузке страницы
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userArray, cardsArray]) => {
+    // Данные юзера необходимые при загрузке страницы
+    api.getUserInfo()
+      .then((userArray) => {
         setCurrentUser(userArray)
-
-        // setСards(cardsArray)
       })
       .catch((error) => {
         console.log(error)
