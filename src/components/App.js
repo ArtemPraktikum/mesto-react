@@ -2,6 +2,7 @@ import Header from './Header.js'
 import Main from './Main.js'
 import Footer from './Footer.js'
 import PopupWithForm from './PopupWithForm.js'
+import EditProfilePopup from './EditProfilePopup.js'
 import { useState, useEffect } from 'react'
 import ImagePopup from './ImagePopup.js'
 import { api } from '../utils/Api.js'
@@ -18,7 +19,8 @@ function App() {
 
   useEffect(() => {
     // Данные юзера необходимые при загрузке страницы
-    api.getUserInfo()
+    api
+      .getUserInfo()
       .then((userArray) => {
         setCurrentUser(userArray)
       })
@@ -26,6 +28,19 @@ function App() {
         console.log(error)
       })
   }, [])
+
+  const handleUpdateUser = (data) => {
+    api
+      .updateUserInfo(data.name, data.about)
+      .then((userData) => {
+        setCurrentUser(userData)
+        closeAllPopups()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   // функции отвечающие за изменение стейта
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true)
@@ -62,45 +77,12 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm
-          popupClass='profile-popup'
-          formName='formProfile'
-          title='Редактировать профиль'
-          submitButtonText='Сохранить'
+        <EditProfilePopup
+          onUpdateUser={handleUpdateUser}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <fieldset className='popup__input'>
-            <label className='popup__field'>
-              <input
-                type='text'
-                className='popup__item'
-                id='name'
-                name='nameInFormProfile'
-                defaultValue={''}
-                placeholder='Имя'
-                required
-                minLength={2}
-                maxLength={40}
-              />
-              <span className='popup__item-error name-error' />
-            </label>
-            <label className='popup__field'>
-              <input
-                type='text'
-                className='popup__item'
-                id='aboutMe'
-                name='aboutMeInFormProfile'
-                defaultValue={''}
-                placeholder='Обо мне'
-                required
-                minLength={2}
-                maxLength={200}
-              />
-              <span className='popup__item-error aboutMe-error' />
-            </label>
-          </fieldset>
-        </PopupWithForm>
+        />
+
         <PopupWithForm
           popupClass='add-popup'
           formName='formAddCard'
@@ -109,7 +91,6 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
         >
-          {/* children */}
           <fieldset className='popup__input'>
             <label className='popup__field'>
               <input
