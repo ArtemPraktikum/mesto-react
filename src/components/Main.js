@@ -7,9 +7,36 @@ function Main(props) {
   // переменные состояния, отвечающие за карточки
   const [cards, setСards] = useState([])
 
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((like) => like._id === traverseUserContext._id)
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setСards((state) => state.map((c) => (c._id === card._id ? newCard : c)))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then((newCard) => {
+        const newCardArr = cards.filter((item) => (item._id === card._id ? null : newCard))
+        setСards(newCardArr)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   useEffect(() => {
     // Данные юзера необходимые при загрузке страницы
-    api.getInitialCards()
+    api
+      .getInitialCards()
       .then((cardsArray) => {
         setСards(cardsArray)
       })
@@ -34,15 +61,13 @@ function Main(props) {
         <button type='button' className='profile__add-button' onClick={props.onAddPlace} />
       </section>
       <section className='elements'>
-        {cards.map((card) => {
+        {cards.map((item) => {
           return (
             <Card
-              link={card.link}
-              name={card.name}
-              likeNumber={card.likes.length}
+              card={item}
               onCardClick={props.onCardClick}
-              id={card.owner._id}
-              likesArray={card.likes}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
             />
           )
         })}

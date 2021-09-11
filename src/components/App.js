@@ -36,10 +36,10 @@ function App() {
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true)
   }
-  const handleCardClick = (name, link) => {
+  const handleCardClick = (card) => {
     setSelectedCard({
-      name: name,
-      link: link,
+      name: card.name,
+      link: card.link,
     })
   }
 
