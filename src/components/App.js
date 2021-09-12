@@ -3,6 +3,7 @@ import Main from './Main.js'
 import Footer from './Footer.js'
 import PopupWithForm from './PopupWithForm.js'
 import EditProfilePopup from './EditProfilePopup.js'
+import EditAvatarPopup from './EditAvatarPopup.js'
 import { useState, useEffect } from 'react'
 import ImagePopup from './ImagePopup.js'
 import { api } from '../utils/Api.js'
@@ -32,6 +33,17 @@ function App() {
   const handleUpdateUser = (data) => {
     api
       .updateUserInfo(data.name, data.about)
+      .then((userData) => {
+        setCurrentUser(userData)
+        closeAllPopups()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  const handleUpdateAvatar = (avatar) => {
+    api
+      .updateAvatar(avatar)
       .then((userData) => {
         setCurrentUser(userData)
         closeAllPopups()
@@ -82,7 +94,11 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         />
-
+        <EditAvatarPopup
+          onUpdateAvatar={handleUpdateAvatar}
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        />
         <PopupWithForm
           popupClass='add-popup'
           formName='formAddCard'
@@ -120,29 +136,7 @@ function App() {
             </label>
           </fieldset>
         </PopupWithForm>
-        <PopupWithForm
-          popupClass='avatar-popup'
-          formName='formAvatar'
-          title='Обновить аватар'
-          submitButtonText='Сохранить'
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <fieldset className='popup__input'>
-            <label className='popup__field'>
-              <input
-                type='url'
-                className='popup__item'
-                id='linkAvatar'
-                name='avatarInformAvatar'
-                defaultValue={''}
-                placeholder='Ссылка на аватар'
-                required
-              />
-              <span className='popup__item-error linkAvatar-error' />
-            </label>
-          </fieldset>
-        </PopupWithForm>
+
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </CurrentUserContext.Provider>

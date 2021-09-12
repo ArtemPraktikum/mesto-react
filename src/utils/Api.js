@@ -1,4 +1,3 @@
-
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl
@@ -19,7 +18,7 @@ class Api {
       }),
     }).then(this._checkResponse)
   }
-  
+
   changeLikeCardStatus = (cardId, isLiked) => {
     if (!isLiked) {
       return this._likeCard(cardId)
@@ -39,14 +38,14 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse)
   }
-  
+
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     }).then(this._checkResponse)
   }
-  
+
   postCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -57,7 +56,7 @@ class Api {
       }),
     }).then(this._checkResponse)
   }
-  
+
   updateUserInfo(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',

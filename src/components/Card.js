@@ -28,7 +28,6 @@ function Card(props) {
     props.onCardDelete(props.card)
   }
 
-
   return (
     <article className='element'>
       <button type='button' className={cardDeleteButtonClassName} onClick={deleteCard} />
