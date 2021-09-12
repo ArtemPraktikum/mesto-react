@@ -3,10 +3,8 @@ import PopupWithForm from './PopupWithForm'
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 
 function EditProfilePopup(props) {
-  // Подписка на контекст
   const traverseUserContext = useContext(CurrentUserContext)
-  // После загрузки текущего пользователя из API
-  // его данные будут использованы в управляемых компонентах.
+
   useEffect(() => {
     setName(traverseUserContext.name)
     setDescription(traverseUserContext.about)
@@ -23,7 +21,7 @@ function EditProfilePopup(props) {
   }
   function handleSubmit(e) {
     e.preventDefault()
-    // Передаём значения управляемых компонентов во внешний обработчик
+
     props.onUpdateUser({
       name,
       about: description,

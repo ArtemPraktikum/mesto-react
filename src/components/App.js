@@ -1,23 +1,33 @@
+import { useState, useEffect } from 'react'
+import { api } from '../utils/Api.js'
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 import Header from './Header.js'
 import Main from './Main.js'
 import Footer from './Footer.js'
-import PopupWithForm from './PopupWithForm.js'
+import ImagePopup from './ImagePopup.js'
 import EditProfilePopup from './EditProfilePopup.js'
 import EditAvatarPopup from './EditAvatarPopup.js'
-import { useState, useEffect } from 'react'
-import ImagePopup from './ImagePopup.js'
-import { api } from '../utils/Api.js'
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
+import AddPlacePopup from './AddPlacePopup.js'
+
 function App() {
-  // переменные состояния, отвечающие за видимость
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(false)
-
-  //Юзер инфо
   const [currentUser, setCurrentUser] = useState('')
+  const [cards, setСards] = useState([])
 
+  useEffect(() => {
+    // Данные юзера необходимые при загрузке страницы
+    api
+      .getInitialCards()
+      .then((cardsArray) => {
+        setСards(cardsArray)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
   useEffect(() => {
     // Данные юзера необходимые при загрузке страницы
     api
@@ -29,6 +39,30 @@ function App() {
         console.log(error)
       })
   }, [])
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id)
+
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setСards((state) => state.map((c) => (c._id === card._id ? newCard : c)))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then((newCard) => {
+        const newCardArr = cards.filter((item) => (item._id === card._id ? null : newCard))
+        setСards(newCardArr)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   const handleUpdateUser = (data) => {
     api
@@ -52,8 +86,18 @@ function App() {
         console.log(error)
       })
   }
+  const handleAddPlaceSubmit = (data) => {
+    api
+      .postCard(data.name, data.link)
+      .then((newCard) => {
+        setСards([newCard, ...cards])
+        closeAllPopups()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-  // функции отвечающие за изменение стейта
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true)
   }
@@ -86,6 +130,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 
@@ -99,43 +146,11 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
-        <PopupWithForm
-          popupClass='add-popup'
-          formName='formAddCard'
-          title='Новое место'
-          submitButtonText='Создать'
+        <AddPlacePopup
+          onUpdateGalery={handleAddPlaceSubmit}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-        >
-          <fieldset className='popup__input'>
-            <label className='popup__field'>
-              <input
-                type='text'
-                className='popup__item'
-                id='placeName'
-                name='nameInFormAddCard'
-                defaultValue={''}
-                placeholder='Название'
-                required
-                minLength={2}
-                maxLength={30}
-              />
-              <span className='popup__item-error placeName-error' />
-            </label>
-            <label className='popup__field'>
-              <input
-                type='url'
-                className='popup__item'
-                id='link'
-                name='aboutMeInFormAddCard'
-                defaultValue={''}
-                placeholder='Ссылка на картинку'
-                required
-              />
-              <span className='popup__item-error link-error' />
-            </label>
-          </fieldset>
-        </PopupWithForm>
+        />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
