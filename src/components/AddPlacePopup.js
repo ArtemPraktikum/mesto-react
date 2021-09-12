@@ -19,6 +19,8 @@ function AddPlacePopup(props) {
       name,
       link,
     })
+    setName('')
+    setLink('')
   }
 
   return (
@@ -38,12 +40,12 @@ function AddPlacePopup(props) {
             className='popup__item'
             id='placeName'
             name='nameInFormAddCard'
-            defaultValue={''}
             placeholder='Название'
             required
             minLength={2}
             maxLength={30}
             onChange={setNameInState}
+            value={name}
           />
           <span className='popup__item-error placeName-error' />
         </label>
@@ -53,10 +55,10 @@ function AddPlacePopup(props) {
             className='popup__item'
             id='link'
             name='aboutMeInFormAddCard'
-            defaultValue={''}
             placeholder='Ссылка на картинку'
             required
             onChange={setLinkInState}
+            value={link}
           />
           <span className='popup__item-error link-error' />
         </label>

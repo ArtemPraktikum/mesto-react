@@ -8,7 +8,7 @@ function EditProfilePopup(props) {
   useEffect(() => {
     setName(traverseUserContext.name)
     setDescription(traverseUserContext.about)
-  }, [traverseUserContext])
+  }, [traverseUserContext, props.isOpen])
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -49,7 +49,7 @@ function EditProfilePopup(props) {
             required
             minLength={2}
             maxLength={40}
-            value={name}
+            value={name || ''}
             onChange={setNameInState}
           />
           <span className='popup__item-error name-error' />
@@ -64,7 +64,7 @@ function EditProfilePopup(props) {
             required
             minLength={2}
             maxLength={200}
-            value={description}
+            value={description || ''}
             onChange={setDescriptionInState}
           />
           <span className='popup__item-error aboutMe-error' />

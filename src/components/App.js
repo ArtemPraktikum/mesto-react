@@ -13,8 +13,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState(false)
-  const [currentUser, setCurrentUser] = useState('')
+  const [selectedCard, setSelectedCard] = useState({name: '', link: ''})
+  const [currentUser, setCurrentUser] = useState({})
   const [cards, setСards] = useState([])
 
   useEffect(() => {
@@ -118,7 +118,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
-    setSelectedCard(false)
+    setSelectedCard({name: '', link: ''})
   }
 
   return (
